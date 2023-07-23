@@ -1,0 +1,11 @@
+*.md
+.gitignore
+Makefile
+LICENSE
+*.yaml
+.git
+.github
+.golangci.yml
+.gitattributes
+manifests
+docs

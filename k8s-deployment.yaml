@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faultyapp
+  labels:
+    app.kubernetes.io/name: faultyapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: faultyapp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: faultyapp
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000     
+      containers:
+        - name: faultyapp
+          imagePullPolicy: Always
+          image: cloudziu/faultyapp:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false        
+            capabilities:
+              drop:
+                - all           
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
